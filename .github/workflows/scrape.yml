@@ -4,11 +4,12 @@ name: GBFS Scraper
 on:
   schedule:
     - cron: '*/10 * * * *'
+    
 
+  
 jobs:
-  build:
+  scrape:
     runs-on: ubuntu-latest
-
     steps:
       # 1) Grab your repo code
       - name: Checkout repository
