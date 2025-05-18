@@ -1,5 +1,8 @@
 name: GBFS Scraper
 
+permissions:
+  contents: write
+
 # Trigger every 10 minutes
 on:
   schedule:
@@ -14,6 +17,11 @@ jobs:
       # 1) Grab your repo code
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # allow pushing back with the GITHUB_TOKEN
+          persist-credentials: true
+          # fetch full history (safer for git operations)
+          fetch-depth: 0
 
       # 2) Install Python
       - name: Set up Python 3.x
@@ -28,6 +36,18 @@ jobs:
       # 4) Run the scraper script (no loop/sleep inside!)
       - name: Run GBFS scraper
         run: python bikeshare_scraper.py
+
+      - name: Commit & push CSV logs
+        if: always()   # even if the script errors, try to push whatever exists
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Stage the two CSVs (no-op if unchanged)
+          git add station_status_log.csv free_bikes_log.csv
+          # Commit if there are changes; skip otherwise
+          git diff --cached --quiet || git commit -m "chore: append GBFS logs [ci skip]"
+          # Push back to the same branch
+          git push
 
       # 5) Upload CSVs even if the script failed
       - name: Upload CSV logs
