@@ -6,7 +6,7 @@ on:
     - cron: '*/10 * * * *'
 
 jobs:
-  scrape:
+  build:
     runs-on: ubuntu-latest
 
     steps:
