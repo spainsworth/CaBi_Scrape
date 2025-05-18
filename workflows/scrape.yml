@@ -1,0 +1,38 @@
+name: GBFS Scraper
+
+# 1) “schedule” tells GitHub to run this on a cron schedule.
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # “*/10” means every 10 minutes
+
+jobs:
+  scrape:
+    # 2) This spins up a fresh Ubuntu VM.
+    runs-on: ubuntu-latest
+
+    steps:
+      # 3) Get your code
+      - uses: actions/checkout@v3
+
+      # 4) Install Python (choose your version)
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # 5) Install dependencies
+      - name: Install requests
+        run: pip install requests
+
+      # 6) Run your script
+      - name: Run scraper
+        run: python bikeshare_scraper.py
+
+      # 7) Save the CSVs as build artifacts
+      - name: Upload CSV logs
+        uses: actions/upload-artifact@v3
+        with:
+          name: gbfs-logs
+          path: |
+            station_status_log.csv
+            free_bikes_log.csv
