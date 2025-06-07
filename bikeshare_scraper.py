@@ -10,8 +10,8 @@ STATION_STATUS_URL = 'https://gbfs.lyft.com/gbfs/2.3/dca-cabi/en/station_status.
 FREE_BIKE_STATUS_URL = 'https://gbfs.lyft.com/gbfs/2.3/dca-cabi/en/free_bike_status.json'
 
 # Output CSV paths
-STATION_CSV = 'station_status_log.csv'
-FREE_BIKE_CSV = 'free_bikes_log.csv'
+STATION_CSV = 'station_status_log1.csv'
+FREE_BIKE_CSV = 'free_bikes_log1.csv'
 
 # CSV headers
 STATION_HEADERS = [
