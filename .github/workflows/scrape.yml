@@ -43,7 +43,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # Stage the two CSVs (no-op if unchanged)
-          git add station_status_log1.csv free_bikes_log1.csv
+          git add station_status_log2.csv free_bikes_log2.csv
           # Commit if there are changes; skip otherwise
           git diff --cached --quiet || git commit -m "chore: append GBFS logs [ci skip]"
           # Push back to the same branch
